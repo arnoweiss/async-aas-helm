@@ -16,7 +16,7 @@ jobs:
         uses: asyncapi/cli@v2.16.0
         with:
           template: '@asyncapi/html-template@0.9.0'
-          filepath: docs/api/my-asyncapi.yml
+          filepath: specs/asyncapi_spec_v21_aas.yaml
           output: generated-html
 
   deploy:
