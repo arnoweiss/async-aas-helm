@@ -1,0 +1,34 @@
+name: AsyncAPI documents processing
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Generating HTML from my AsyncAPI document
+        uses: asyncapi/cli@v2.16.0
+        with:
+          template: '@asyncapi/html-template@0.9.0'
+          filepath: docs/api/my-asyncapi.yml
+          output: generated-html
+
+  deploy:
+    needs: generate
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
