@@ -12,6 +12,9 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
 
+      - name: Remove git folder
+        run: rm -rf .git
+
       - name: Generating HTML for AAS document
         uses: asyncapi/cli@v3.2.0
         with:
